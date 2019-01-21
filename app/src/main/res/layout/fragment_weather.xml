@@ -7,7 +7,8 @@
     <RelativeLayout
         android:id="@+id/rl_top"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/colorAccent">
 
         <TextView
@@ -16,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
-            android:text="深圳"
             android:textColor="@color/defaultTextColor"
             android:textSize="25sp" />
 
@@ -27,7 +27,6 @@
             android:layout_below="@id/tv_city"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="雷阵雨"
             android:textColor="@color/defaultTextColor"
             android:textSize="30sp" />
 
@@ -39,13 +38,38 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:paddingLeft="20dp"
-            android:text="5°"
             android:textColor="@color/defaultTextColor"
             android:textSize="65sp" />
+
+        <TextView
+            android:id="@+id/tv_suggest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/defaultTextColor"
+            android:textSize="15sp" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_weather"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="300dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_weather"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@color/colorPrimary"></LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
