@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.viewPager);
         WeatherFragment fragment = new WeatherFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("cityCode", CityCodeDBManager.getInstance().queryCityCode("龙南"));
+        bundle.putString("cityCode", CityCodeDBManager.getInstance().queryCityCode("北京"));
         fragment.setArguments(bundle);
         mFragments.add(fragment);
 
@@ -53,7 +53,13 @@ public class MainActivity extends AppCompatActivity {
         bundle1.putString("cityCode", CityCodeDBManager.getInstance().queryCityCode("宝安"));
         fragment1.setArguments(bundle1);
         mFragments.add(fragment1);
-        mFragments.add(new WeatherFragment());
+
+        WeatherFragment fragment2 = new WeatherFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("cityCode", CityCodeDBManager.getInstance().queryCityCode("井冈山"));
+        fragment2.setArguments(bundle2);
+        mFragments.add(fragment2);
+
         mPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mPagerAdapter);
     }
