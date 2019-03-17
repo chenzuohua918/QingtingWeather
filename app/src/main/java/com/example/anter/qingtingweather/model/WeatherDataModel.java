@@ -26,7 +26,7 @@ public class WeatherDataModel {
     private Context mContext;
 
     public WeatherDataModel(Context context) {
-        this.mContext = context;
+        this.mContext = context.getApplicationContext();
     }
 
     public void getWeatherData(String cityCode, final OnGetWeatherDataListener listener) {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.anter.qingtingweather.MyApplication;
 import com.example.anter.qingtingweather.R;
 import com.example.anter.qingtingweather.utils.SharePreferenceUtils;
 
@@ -27,22 +26,21 @@ public class CityCodeDBManager {
     private static final String NAMECN = "namecn";// 区县
     private static final String CITY_CODE = "city_code";// 城市编码
 
-    private CityCodeDBManager() {
-        if (!SharePreferenceUtils.getBoolean(MyApplication.getInstance(), "copySuccess", false)) {
-            writeCityDB(MyApplication.getInstance(), DB_NAME);
+    private CityCodeDBManager(Context context) {
+        Context application = context.getApplicationContext();
+        if (!SharePreferenceUtils.getBoolean(application, "copySuccess", false)) {
+            writeCityDB(application, DB_NAME);
         }
-        mDatabase = MyApplication.getInstance().openOrCreateDatabase(mCityDBPath, Context.MODE_PRIVATE, null);
+        mDatabase = application.openOrCreateDatabase(mCityDBPath, Context.MODE_PRIVATE, null);
     }
 
-    private static synchronized void syncInit() {
+    public static CityCodeDBManager getInstance(Context context) {
         if (null == instance) {
-            instance = new CityCodeDBManager();
-        }
-    }
-
-    public static CityCodeDBManager getInstance() {
-        if (null == instance) {
-            syncInit();
+            synchronized (CityCodeDBManager.class) {
+                if (null == instance) {
+                    instance = new CityCodeDBManager(context);
+                }
+            }
         }
         return instance;
     }

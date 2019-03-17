@@ -12,20 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.anter.qingtingweather.MyApplication;
 import com.example.anter.qingtingweather.R;
 import com.example.anter.qingtingweather.adapter.WeatherDayAdapter;
 import com.example.anter.qingtingweather.bean.WeatherBean;
 import com.example.anter.qingtingweather.listener.OnGetWeatherDataListener;
 import com.example.anter.qingtingweather.model.WeatherDataModel;
-import com.example.anter.qingtingweather.utils.Logcat;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 public class WeatherFragment extends Fragment {
     private static final String TAG = WeatherFragment.class.getSimpleName();
@@ -65,7 +56,7 @@ public class WeatherFragment extends Fragment {
             }
         }
         if (mWeatherDataModel == null) {
-            mWeatherDataModel = new WeatherDataModel(MyApplication.getInstance());
+            mWeatherDataModel = new WeatherDataModel(getActivity());
         }
         mWeatherDataModel.getWeatherData(mCityCode, new OnGetWeatherDataListener() {
             @Override
