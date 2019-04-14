@@ -47,15 +47,15 @@ public class CityCodeDBManager {
 
     private void writeCityDB(Context context, String dbName) {
         mCityDBPath = context.getFilesDir() + "\\databases\\" + dbName;// 此处如果是放在应用包名的目录下,自动放入“databases目录下
-        FileOutputStream fout = null;
+        FileOutputStream fos = null;
         InputStream inputStream = null;
         try {
             inputStream = context.getResources().openRawResource(R.raw.city);
-            fout = new FileOutputStream(new File(mCityDBPath));
+            fos = new FileOutputStream(new File(mCityDBPath));
             byte[] buffer = new byte[128];
             int len = 0;
             while ((len = inputStream.read(buffer)) != -1) {
-                fout.write(buffer, 0, len);
+                fos.write(buffer, 0, len);
             }
             SharePreferenceUtils.putBoolean(context, "copySuccess", true);
         } catch (FileNotFoundException e) {
@@ -63,9 +63,9 @@ public class CityCodeDBManager {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (fout != null) {
+            if (fos != null) {
                 try {
-                    fout.close();
+                    fos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
