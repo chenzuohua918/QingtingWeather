@@ -10,25 +10,26 @@ import android.widget.TextView;
 
 import com.example.anter.qingtingweather.R;
 import com.example.anter.qingtingweather.bean.ForecastDay;
+import com.example.anter.qingtingweather.bean.ForecastHour;
 import com.example.anter.qingtingweather.utils.ScreenUtils;
 import com.example.anter.qingtingweather.utils.WeatherUtils;
 
 import java.util.List;
 
-public class WeatherDayAdapter extends RecyclerView.Adapter<WeatherDayAdapter.ViewHolder> {
+public class WeatherHourAdapter extends RecyclerView.Adapter<WeatherHourAdapter.ViewHolder> {
     private Context mContext;
-    private List<ForecastDay> mDataList;
+    private List<ForecastHour> mDataList;
 
     private static int PAGE_ITEM_COUNT = 7;
 
-    public WeatherDayAdapter(Context context, List<ForecastDay> data) {
+    public WeatherHourAdapter(Context context, List<ForecastHour> data) {
         this.mContext = context;
         this.mDataList = data;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_weather_day, viewGroup, false);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.item_weather_hour, viewGroup, false);
         itemView.getLayoutParams().width = (ScreenUtils.getScreenWidth(mContext) - (PAGE_ITEM_COUNT
                 - mContext.getResources().getDimensionPixelOffset(R.dimen.page_item_divider_width))) / PAGE_ITEM_COUNT;
         return new ViewHolder(itemView);
@@ -36,13 +37,14 @@ public class WeatherDayAdapter extends RecyclerView.Adapter<WeatherDayAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        ForecastDay day = mDataList.get(position);
-        viewHolder.mItemDate.setText(day.date);
-        viewHolder.mItemWeek.setText(day.week);
-        viewHolder.mItemWeatherIcon.setImageResource(WeatherUtils.getWeatherIconRes(day.dayWeatherType));
-        viewHolder.mItemWeather.setText(day.dayWeather);
-        viewHolder.mItemLowTemp.setText(day.lowTemp + mContext.getString(R.string.temp_unit));
-        viewHolder.mItemHighTemp.setText(day.highTemp + mContext.getString(R.string.temp_unit));
+        ForecastHour hour = mDataList.get(position);
+        viewHolder.mItemTime.setText(hour.time);
+        viewHolder.mItemWeatherIcon.setImageResource(WeatherUtils.getWeatherIconRes(hour.weatherType));
+        viewHolder.mItemWeather.setText(hour.weather);
+        viewHolder.mItemTemp.setText(hour.temp + mContext.getString(R.string.temp_unit));
+        viewHolder.mItemShidu.setText(hour.shidu);
+        viewHolder.mItemWindDirection.setText(hour.windDirection);
+        viewHolder.mItemWindSpeed.setText(hour.windSpeed);
     }
 
     @Override
@@ -56,16 +58,17 @@ public class WeatherDayAdapter extends RecyclerView.Adapter<WeatherDayAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mItemDate, mItemWeek, mItemWeather, mItemLowTemp, mItemHighTemp;
+        private TextView mItemTime, mItemWeather, mItemTemp, mItemShidu, mItemWindDirection, mItemWindSpeed;
         private ImageView mItemWeatherIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mItemDate = itemView.findViewById(R.id.item_date);
-            mItemWeek = itemView.findViewById(R.id.item_week);
+            mItemTime = itemView.findViewById(R.id.item_time);
             mItemWeather = itemView.findViewById(R.id.item_weather);
-            mItemLowTemp = itemView.findViewById(R.id.item_low_temp);
-            mItemHighTemp = itemView.findViewById(R.id.item_high_temp);
+            mItemTemp = itemView.findViewById(R.id.item_temp);
+            mItemShidu = itemView.findViewById(R.id.item_shidu);
+            mItemWindDirection = itemView.findViewById(R.id.item_wind_direction);
+            mItemWindSpeed = itemView.findViewById(R.id.item_wind_speed);
             mItemWeatherIcon = itemView.findViewById(R.id.item_weather_icon);
         }
     }

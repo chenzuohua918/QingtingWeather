@@ -14,16 +14,16 @@ import android.widget.TextView;
 
 import com.example.anter.qingtingweather.R;
 import com.example.anter.qingtingweather.adapter.WeatherDayAdapter;
+import com.example.anter.qingtingweather.adapter.WeatherHourAdapter;
 import com.example.anter.qingtingweather.bean.WeatherBean;
 import com.example.anter.qingtingweather.listener.OnGetWeatherDataListener;
 import com.example.anter.qingtingweather.model.WeatherDataModel;
 
 public class WeatherFragment extends Fragment {
-    private static final String TAG = WeatherFragment.class.getSimpleName();
-
     private TextView mTvCity, mTvWeather, mTvTemp, mTvSuggest;
-    private RecyclerView mRvWeather;
-    private WeatherDayAdapter mAdapter;
+    private RecyclerView mRvDayWeather, mRvHourWeather;
+    private WeatherDayAdapter mDayAdapter;
+    private WeatherHourAdapter mHourAdapter;
     private String mCityCode;
     private WeatherDataModel mWeatherDataModel;
 
@@ -40,11 +40,15 @@ public class WeatherFragment extends Fragment {
         mTvTemp = contentView.findViewById(R.id.tv_temp);
         mTvSuggest = contentView.findViewById(R.id.tv_suggest);
 
-        mRvWeather = contentView.findViewById(R.id.recycler_weather);
-        mRvWeather.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvDayWeather = contentView.findViewById(R.id.recycler_weather_days);
+        mRvDayWeather.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL);
         itemDecoration.setDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.shape_weather_divider));
-        mRvWeather.addItemDecoration(itemDecoration);
+        mRvDayWeather.addItemDecoration(itemDecoration);
+
+        mRvHourWeather = contentView.findViewById(R.id.recycler_weather_hours);
+        mRvHourWeather.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvHourWeather.addItemDecoration(itemDecoration);
 
         loadWeatherData();
     }
@@ -68,8 +72,11 @@ public class WeatherFragment extends Fragment {
                     mTvSuggest.setText(bean.suggest);
                 }
 
-                mAdapter = new WeatherDayAdapter(getActivity(), bean.forecastDayList);
-                mRvWeather.setAdapter(mAdapter);
+                mDayAdapter = new WeatherDayAdapter(getActivity(), bean.forecastDayList);
+                mRvDayWeather.setAdapter(mDayAdapter);
+
+                mHourAdapter = new WeatherHourAdapter(getActivity(), bean.forecastHourList);
+                mRvHourWeather.setAdapter(mHourAdapter);
             }
 
             @Override

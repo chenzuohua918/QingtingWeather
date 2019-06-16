@@ -96,7 +96,7 @@ public class WeatherDataModel {
                 itemObject = forecast15.getJSONObject(i);
                 day = new ForecastDay();
                 date = itemObject.getString("date");
-                day.setDate(date);
+                day.setDate(DateTimeUtils.formatDate(date, "yyyyMMdd", "M-d"));
                 day.setWeek(DateTimeUtils.dateToWeek(mContext, date));
                 day.setSunrise(itemObject.getString("sunrise"));
                 day.setSunset(itemObject.getString("sunset"));
@@ -131,7 +131,8 @@ public class WeatherDataModel {
                 itemObject = hourfc.getJSONObject(i);
                 hour = new ForecastHour();
                 time = itemObject.getString("time");
-                hour.setTime(DateTimeUtils.formatTime(time));
+                hour.setDate(DateTimeUtils.formatDate(time, "yyyyMMddHHmm", "M-d"));
+                hour.setTime(DateTimeUtils.formatDate(time, "yyyyMMddHHmm", "HH:mm"));
                 hour.setWeather(itemObject.getString("type_desc"));
                 hour.setWeatherType(itemObject.getInt("type"));
                 hour.setTemp(itemObject.getInt("wthr"));

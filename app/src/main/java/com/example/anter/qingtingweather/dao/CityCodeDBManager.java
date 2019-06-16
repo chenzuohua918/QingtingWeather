@@ -53,7 +53,7 @@ public class CityCodeDBManager {
             inputStream = context.getResources().openRawResource(R.raw.city);
             fos = new FileOutputStream(new File(mCityDBPath));
             byte[] buffer = new byte[128];
-            int len = 0;
+            int len;
             while ((len = inputStream.read(buffer)) != -1) {
                 fos.write(buffer, 0, len);
             }
@@ -77,7 +77,6 @@ public class CityCodeDBManager {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 

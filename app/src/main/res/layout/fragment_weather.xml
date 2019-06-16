@@ -62,14 +62,19 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_weather"
+                android:id="@+id/recycler_weather_days"
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:background="@color/colorPrimary"></LinearLayout>
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_weather_hours"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

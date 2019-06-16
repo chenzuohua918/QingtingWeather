@@ -11,15 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateTimeUtils {
-    private static String[] WEEKDAYS = {
-            "周一",
-            "周二",
-            "周三",
-            "周四",
-            "周五",
-            "周六",
-            "周日"
-    };
+    private static String[] WEEKDAYS;
 
     public static String dateToWeek(Context context, String dateStr) {
         try {
@@ -29,7 +21,6 @@ public class DateTimeUtils {
                 int currentDay = Integer.valueOf(new SimpleDateFormat("d").format(currentDate));
 
                 Date date = new SimpleDateFormat("yyyyMMdd").parse(dateStr);
-                String md = new SimpleDateFormat("M-d").format(date);
                 // 先获取年份
                 int year = Integer.valueOf(new SimpleDateFormat("yyyy").format(date));
                 // 获取一年中的第几天
@@ -64,11 +55,12 @@ public class DateTimeUtils {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(date);
                     int weekIndex = calendar.get(Calendar.DAY_OF_WEEK);
-                    if (weekIndex >= 1 && weekIndex <= WEEKDAYS.length) {
-                        week = WEEKDAYS[weekIndex - 1];
+                    if (WEEKDAYS == null) {
+                        WEEKDAYS = context.getResources().getStringArray(R.array.weeks);
                     }
+                    week = WEEKDAYS[weekIndex - 1];
                 }
-                return md + "\n" + week;
+                return week;
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -76,10 +68,10 @@ public class DateTimeUtils {
         return null;
     }
 
-    public static String formatTime(String time) {
+    public static String formatDate(String date, String inPattern, String outPattern) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-            return new SimpleDateFormat("HH:mm").format(sdf.parse(time));
+            SimpleDateFormat sdf = new SimpleDateFormat(inPattern);
+            return new SimpleDateFormat(outPattern).format(sdf.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
