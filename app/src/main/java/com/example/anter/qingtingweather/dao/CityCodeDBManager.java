@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CityCodeDBManager {
     private static CityCodeDBManager instance;
@@ -21,6 +23,7 @@ public class CityCodeDBManager {
     private static final String DB_NAME = "city.db";
     private static final String TABLE_NAME = "city_code";
 
+    private static final String ROW_ID = "rowid";
     private static final String PROVINCE = "province";// 省
     private static final String DISTRICTCN = "districtcn";// 区域
     private static final String NAMECN = "namecn";// 区县
@@ -91,5 +94,44 @@ public class CityCodeDBManager {
             cursor.close();
         }
         return cityCode;
+    }
+
+    public List<String> queryProvinces() {
+        Cursor cursor = mDatabase.query(TABLE_NAME, new String[]{PROVINCE}, null, null, PROVINCE, null, ROW_ID);
+        if (null != cursor) {
+            List<String> list = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                list.add(cursor.getString(cursor.getColumnIndex(PROVINCE)));
+            }
+            cursor.close();
+            return list;
+        }
+        return null;
+    }
+
+    public List<String> queryDistricts(String province) {
+        Cursor cursor = mDatabase.query(TABLE_NAME, new String[]{DISTRICTCN}, PROVINCE + " = ?", new String[]{province}, DISTRICTCN, null, ROW_ID);
+        if (null != cursor) {
+            List<String> list = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                list.add(cursor.getString(cursor.getColumnIndex(DISTRICTCN)));
+            }
+            cursor.close();
+            return list;
+        }
+        return null;
+    }
+
+    public List<String> queryCountries(String province, String district) {
+        Cursor cursor = mDatabase.query(TABLE_NAME, new String[]{NAMECN}, PROVINCE + " = ? and " + DISTRICTCN + " = ?", new String[]{province, district}, null, null, null);
+        if (null != cursor) {
+            List<String> list = new ArrayList<>();
+            while (cursor.moveToNext()) {
+                list.add(cursor.getString(cursor.getColumnIndex(NAMECN)));
+            }
+            cursor.close();
+            return list;
+        }
+        return null;
     }
 }

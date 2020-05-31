@@ -33,19 +33,20 @@ public class WeatherDataModel {
         if (!TextUtils.isEmpty(cityCode)) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String date = sdf.format(new Date());
-            StringRequest request = new StringRequest("http://zhwnlapi.etouch.cn/Ecalender/api/v2/weather?date=" + date + "&citykey=" + cityCode, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String s) {
-                    WeatherBean bean = parseJsonResult(s);
-                    if (listener != null) {
-                        if (bean != null) {
-                            listener.onSuccess(bean);
-                        } else {
-                            listener.onError();
+            StringRequest request = new StringRequest("http://zhwnlapi.etouch.cn/Ecalender/api/v2/weather?date=" + date + "&citykey=" + cityCode,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            WeatherBean bean = parseJsonResult(s);
+                            if (listener != null) {
+                                if (bean != null) {
+                                    listener.onSuccess(bean);
+                                } else {
+                                    listener.onError();
+                                }
+                            }
                         }
-                    }
-                }
-            }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     if (listener != null) {
